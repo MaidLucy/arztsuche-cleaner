@@ -1,4 +1,4 @@
-.arztPraxisDatas[0] | {
+.arztPraxisDatas | map( . | {
     anrede: .anrede, 
     name: .name, 
     strasse: .strasse, 
@@ -28,4 +28,4 @@
             }
         )
     )
-}
+} )
