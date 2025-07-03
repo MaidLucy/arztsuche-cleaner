@@ -1,15 +1,20 @@
 #!/bin/python3
 import json
+import jq
+import sys
+import os
 
-doctors = json.load(open("/tmp/psychiater.json"))
+pg = jq.compile(open("./filter.jq").read())
 
-print("""
+doctors = json.loads(pg.input_value(json.loads(sys.stdin.read())).text())
+
+document = ["""
 \\documentclass[a4paper, 10pt]{{article}}
 \\usepackage[a4paper, margin=2cm]{{geometry}}
 \\usepackage[ngerman]{{babel}}
 \\usepackage{{hyperref}}
-\\title{{{0} Psychiater:innen in Regensburg (25km Umkreis) gefunden}}
-\\author{{arztsuche-cleaner}}
+\\title{{{0}}}
+\\author{{\\url{{https://github.com/MaidLucy/arztsuche-cleaner}}}}
 \\date{{Stand: \\today}}
 \\setcounter{{secnumdepth}}{{0}}
 
@@ -17,11 +22,12 @@ print("""
 \\maketitle
 \\pagebreak
 """.format(
-    len(doctors)
-    ))
+    str(len(doctors)) + ' ' +
+    sys.argv[1]
+    )]
 
 for doctor in doctors:
-    print("""
+    document.append("""
     \\section{{{0}}}
 
     \\begin{{minipage}}{{8cm}}
@@ -48,12 +54,12 @@ for doctor in doctors:
         ))
 
     if len(doctor["anrufzeiten"]) > 0:
-        print("""    \\begin{minipage}{6cm}
+        document.append("""    \\begin{minipage}{6cm}
     \\textbf{Anrufzeiten}\\\\
 
         """)
     for anrufzeit in doctor["anrufzeiten"]:
-        print("""        \\makebox[2cm][l]{{{0} {1}:}} {2}\\
+        document.append("""        \\makebox[2cm][l]{{{0} {1}:}} {2}\\
         """.format(
             anrufzeit["tag"],
             anrufzeit["datum"],
@@ -61,6 +67,12 @@ for doctor in doctors:
             ))
 
     if len(doctor["anrufzeiten"]) > 0:
-        print("    \\end{minipage}")
+        document.append("    \\end{minipage}")
 
-print("\\end{document}")
+document.append("\\end{document}")
+
+with open("./output/arztsuche.tex", 'w') as f:
+    f.write('\n'.join(document))
+
+os.chdir('./output/')
+os.system('pdflatex arztsuche.tex')

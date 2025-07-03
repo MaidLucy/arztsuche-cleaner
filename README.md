@@ -14,3 +14,11 @@ curl -X POST ……… | jq -f filter.jq
 ```
 
 You can also of course just pipe a downloaded json-file into it.
+
+# Create a PDF
+
+Sometimes having a paper on your desk is easier.
+
+```bash
+curl ……… | ./topdf "title of the pdf file"
+```
