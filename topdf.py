@@ -31,18 +31,20 @@ for doctor in doctors:
     \\section{{{0}}}
 
     \\begin{{minipage}}{{8cm}}
-    \\makebox[1.75cm][l]{{Name:}}    {1} {0}\\\\
-    \\makebox[1.75cm][l]{{Adresse:}} {2} {3}\\\\
-    \\makebox[1.75cm][l]{{ \\ }}     {4} {5}\\\\
-    \\makebox[1.75cm][l]{{Telefon:}} \\texttt{{{6}}}\\\\
-    \\makebox[1.75cm][l]{{Handy:}}   \\texttt{{{7}}}\\\\
-    \\makebox[1.75cm][l]{{E-Mail:}}  \\href{{mailto:{8}}}{{{8}}}\\\\
-    \\makebox[1.75cm][l]{{Web:}}     \\url{{{9}}}\\\\
+    \\makebox[1.85cm][l]{{Name:}}    {1} {0}\\\\
+    \\makebox[1.85cm][l]{{Entfernung:}}    {2} km\\\\
+    \\makebox[1.85cm][l]{{Adresse:}} {3} {4}\\\\
+    \\makebox[1.85cm][l]{{ \\ }}     {5} {6}\\\\
+    \\makebox[1.85cm][l]{{Telefon:}} \\texttt{{{7}}}\\\\
+    \\makebox[1.85cm][l]{{Handy:}}   \\texttt{{{8}}}\\\\
+    \\makebox[1.85cm][l]{{E-Mail:}}  \\href{{mailto:{{9}}}}{{{9}}}\\\\
+    \\makebox[1.85cm][l]{{Web:}}     \\url{{{10}}}\\\\
 
     \\end{{minipage}}"""
     .format(
         doctor["name"],
         doctor["anrede"],
+        format(int(doctor["entfernung"])/1000, '.3f'),
         doctor["strasse"],
         doctor["hausnummer"],
         doctor["plz"],

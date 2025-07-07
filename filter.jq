@@ -5,6 +5,7 @@
     hausnummer: .hausnummer, 
     plz: .plz, 
     ort: .ort, 
+    entfernung: .distance,
     telefon: .tel, 
     handy: .handy, 
     email: .email, 
