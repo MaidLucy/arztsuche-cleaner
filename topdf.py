@@ -29,6 +29,7 @@ document = ["""
 for doctor in doctors:
     document.append("""
     \\section{{{0}}}
+    \\subsection{{{11}}}
 
     \\begin{{minipage}}{{8cm}}
     \\makebox[1.85cm][l]{{Name:}}    {1} {0}\\\\
@@ -53,6 +54,7 @@ for doctor in doctors:
         doctor["handy"],
         doctor["email"],
         doctor["web"],
+        doctor["ag"],
         ))
 
     if len(doctor["anrufzeiten"]) > 0:

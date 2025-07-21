@@ -9,6 +9,7 @@
     telefon: .tel, 
     handy: .handy, 
     email: .email, 
+    ag: (.ag[0] | .value),
     web: .web, 
     anrufzeiten: (.tsz | 
         map( . | 
