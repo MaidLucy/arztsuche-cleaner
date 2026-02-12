@@ -14,16 +14,15 @@
     anrufzeiten: (.tsz | 
         map( . | 
             select( 
-                contains({tszDesTyps: [{typ: "Telefonische Erreichbarkeit"}]})
+                contains({typTsz: [{typ: "07"}]})
             ) 
         ) |
         map (
             {
                 datum: .d,
-                tag: .t,
-                sprechzeiten: ( .tszDesTyps |
+                sprechzeiten: ( .typTsz |
                     map( . |
-                        select(.typ=="Telefonische Erreichbarkeit") |
+                        select(.typ=="07") |
                         .sprechzeiten[]
                     )
                 )

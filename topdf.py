@@ -3,6 +3,7 @@ import json
 import jq
 import sys
 import os
+import datetime
 
 pg = jq.compile(open("./filter.jq").read())
 
@@ -58,16 +59,17 @@ for doctor in doctors:
         ))
 
     if len(doctor["anrufzeiten"]) > 0:
-        document.append("""    \\begin{minipage}{6cm}
+        document.append("""    \\begin{minipage}{8cm}
     \\textbf{Anrufzeiten}\\\\
 
         """)
     for anrufzeit in doctor["anrufzeiten"]:
-        document.append("""        \\makebox[2cm][l]{{{0} {1}:}} {2}\\
+        document.append("""        \\makebox[3cm][l]{{{0} {1}:}} {2}\\
         """.format(
-            anrufzeit["tag"],
+            datetime.datetime.strptime(anrufzeit["datum"], "%Y-%m-%d").date()
+                .strftime("%a"),
             anrufzeit["datum"],
-            ", ".join(map(lambda z: z["zeit"], anrufzeit["sprechzeiten"]))
+            ", ".join(map(lambda z: z["z"], anrufzeit["sprechzeiten"]))
             ))
 
     if len(doctor["anrufzeiten"]) > 0:
